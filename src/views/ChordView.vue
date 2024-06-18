@@ -74,13 +74,13 @@
             color="accent"
             type="ghost"
             @click="playChord(chordNotes, false)"
-            ><Icon name="recording-1" />Play Chord</Button
+            ><Icon name="recording-1" />Chord</Button
           >
           <Button
             color="accent"
             type="ghost"
             @click="playChord(chordNotes, true)"
-            ><Icon name="recording-2" />Play Arpeggio</Button
+            ><Icon name="recording-2" />Arpeggio</Button
           >
         </div>
         <SegmentedControlRoot
@@ -161,6 +161,7 @@
     align-items: center;
     width: 100%;
     gap: var(--space-lg);
+    padding: 0 var(--space-xl);
   }
 
   .titles {

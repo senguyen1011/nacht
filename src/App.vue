@@ -5,8 +5,7 @@
 
 <template>
   <RouterView/>
-
-  <div class="footer-offset"></div>
+  <!-- <div class="footer-offset">&nbsp;</div> -->
   <footer>
     <nav>
       <RouterLink
@@ -24,17 +23,19 @@
 
 <style>
   :root {
-    --footer-height: calc(var(--size-16) + (var(--space-lg) * 2));
+    --footer-height: calc(var(--size-16) + var(--space-xl));
   }
   footer {
-    position: fixed;
+    position: sticky;
     bottom: 0;
     left: 0;
     right: 0;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
     height: var(--footer-height);
-    /* width: var(--screen-xs); */
     margin: 0 auto;
-    padding: var(--space-lg) 0;
+    z-index: 100;
   }
 
   nav {
