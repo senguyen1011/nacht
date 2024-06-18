@@ -1,28 +1,4 @@
 import { computed, onMounted, onUnmounted, ref, type ComputedRef } from 'vue';
-/** Data */
-const allNotes = [
-  'C',
-  'C#',
-  'Db',
-  'D',
-  'D#',
-  'Eb',
-  'E',
-  'E#',
-  'Fb',
-  'F',
-  'F#',
-  'Gb',
-  'G',
-  'G#',
-  'Ab',
-  'A',
-  'A#',
-  'Bb',
-  'B',
-  'B#',
-  'Cb'
-];
 
 /** Methods */
 function mod(a: number, b: number): number {
@@ -54,13 +30,4 @@ function addToClasses(classList: string[], val?: any, className?: string): void 
   val && classList.push(className ? `${className}-${val.toString()}` : val.toString());
 }
 
-function formatNote(note: string): string {
-  if (note.includes('b') || note.includes('#')) {
-    return note.replace('b', '♭').replace('#', '♯');
-  } else {
-    return note.replace('♭', '').replace('♯', '#');
-  }
-}
-
-export { allNotes };
-export { addToClasses, mod, useBreakpoints, formatNote };
+export { addToClasses, mod, useBreakpoints,  };

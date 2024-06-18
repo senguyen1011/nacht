@@ -48,17 +48,17 @@
   .segmented-control .inpt:has(input[type='radio']:checked) {
     --inpt-text: var(--text-accent);
     --inpt-background: transparent;
-    --inpt-border: var(--border-accent);
+    --inpt-border: var(--border);
     z-index: 1;
   }
   .segmented-control .inpt:has(input[type='radio']:checked):hover {
     --inpt-text: var(--text-accent-hover);
-    --inpt-background: var(--background-ghost-accent-hover);
-    --inpt-border: var(--border-accent-hover);
+    --inpt-background: var(--background-input-hover);
+    --inpt-border: var(--border-accent);
   }
   .segmented-control .inpt:has(input[type='radio']:checked):is(:active, :focus) {
     --inpt-text: var(--text-accent-hover);
-    --inpt-background: var(--background-ghost-accent-hover);
+    --inpt-background: var(--background-input-focus);
     --inpt-border: var(--border-accent-hover);
     box-shadow: var(--ring-accent);
   }

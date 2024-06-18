@@ -63,12 +63,13 @@
 
     --inpt-text: var(--text);
     --inpt-background: var(--background-input);
-    --inpt-border: transparent;
+    --inpt-border: var(--border);
 
     display: inline-flex;
     justify-content: center;
     align-items: center;
     height: var(--height);
+    min-height: var(--height);
     width: 100%;
     padding: var(--size-px) var(--pad-x);
     gap: var(--gap);

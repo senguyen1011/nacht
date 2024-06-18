@@ -5,6 +5,7 @@
   /** Props */
   interface Props extends Omit<ButtonProps, 'link'> {
     name: string;
+    value?: string;
   }
   const props = withDefaults(defineProps<Props>(), {
     size: 'md'
@@ -17,7 +18,7 @@
 
   /** Emits */
   const emit = defineEmits<{
-    (e: 'input', value?: string): void;
+    (e: 'input', value: string): void;
   }>();
 
   /** On Mount */
@@ -29,12 +30,18 @@
       for (let child of children.value) {
         child.classList.add(props.size);
 
-        const radioInput = child.querySelector("input[type='radio']");
+        const radioInput: HTMLInputElement | null = child.querySelector("input[type='radio']");
         radioInput!.setAttribute('name', props.name);
-        if (ind === 0) {
+        if (props.value && radioInput!.value === props.value) {
           radioInput!.setAttribute('checked', 'true');
           indicator.value!.style.transform = `translateX(${ind * 100}%)`;
+        } else {
+          if (ind === 0) {
+            radioInput!.setAttribute('checked', 'true');
+            indicator.value!.style.transform = `translateX(${ind * 100}%)`;
+          }
         }
+
         ind++;
       }
     }
@@ -77,11 +84,12 @@
     height: fit-content;
     width: 100%;
     background-color: var(--background-input-inset);
+    border: 1px solid var(--border-input-inset);
     border-radius: var(--radius-full);
   }
 
   .segmented-control .indicator {
-    --indctr-background: var(--background-ghost-accent);
+    --indctr-background: var(--background-input);
     position: absolute;
     top: 0;
     left: 0;

@@ -14,9 +14,9 @@
     align-items: center;
     height: var(--height);
     padding: 1px var(--pad-x);
-    gap: var(--gap);
     font-size: var(--font-size);
     background-color: var(--background-input-inset);
+    border: 1px solid var(--border-input-inset);
     border-radius: var(--radius-xl);
   }
 </style>

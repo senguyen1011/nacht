@@ -1,5 +1,6 @@
 import Button from './Button.vue';
-import * as ScrollPicker from './ScrollPicker';
+import * as ListSelect from './ListSelect';
+import * as ScrollSelect from './ScrollSelect';
 import * as SegmentedControl from './SegmentedControl';
 import TextField from './TextField.vue';
 
@@ -9,10 +10,10 @@ interface InputProps {
 
 interface ButtonProps extends Omit<InputProps, 'type'> {
   color?: 'grey' | 'accent';
-  // type?: 'ghost';
+  type?: 'grey' | 'solid' | 'ghost';
   link?: boolean;
   icon?: boolean;
 }
 
 export type { ButtonProps, InputProps };
-export { Button, ScrollPicker, SegmentedControl, TextField };
+export { Button, ListSelect, ScrollSelect, SegmentedControl, TextField };

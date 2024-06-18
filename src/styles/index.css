@@ -14,9 +14,7 @@ html {
 }
 
 body {
-  width: var(--screen-xs);
-  height: 100dvh;
-  /* height: 932px; TEMPORARY - ONLY FOR MOBILE DEVELOPMENT */
+  position: relative;
   margin: auto;
   color: var(--text);
   background-color: var(--background);
@@ -24,8 +22,10 @@ body {
 
 #app {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 100dvh;
 }
 
 a, button, input, .inpt {
@@ -43,8 +43,14 @@ button {
   cursor: pointer;
 }
 
+.flex-row {
+  display: flex;
+  gap: var(--space-md);
+}
+
 ::-webkit-scrollbar {
   height: var(--size-2\.5);
+  width: var(--size-2\.5);
   background-color: transparent;
 }
 ::-webkit-scrollbar-track {

@@ -121,16 +121,17 @@
 
   /* Semantic Colors */
   --background: var(--sand-1);
-  --background-card: var(--sand-3);
+  --background-card: var(--sand-2);
   --background-accent: var(--amber-9);
   --background-accent-hover: var(--amber-10);
+  --background-accent-focus: var(--amber-11);
   --background-ghost-accent: var(--amber-a4);
-  --background-ghost-accent-hover: var(--amber-5);
-  --background-input: var(--sand-a4);
-  --background-input-hover: var(--sand-5);
-  --background-input-focus: var(--sand-6);
-  --background-input-inset: var(--sand-2);
-  --background-nav: var(--sand-a2);
+  --background-ghost-accent-hover: var(--amber-6);
+  --background-input: var(--sand-a2);
+  --background-input-hover: var(--sand-3);
+  --background-input-focus: var(--sand-4);
+  --background-input-inset: var(--sand-1);
+  --background-nav: #191918cc;
   --background-key-white: var(--sand-12);
   --background-key-black: var(--sand-4);
   --background-key-white-hover: var(--sand-11);
@@ -139,6 +140,8 @@
   --border: var(--sand-6);
   --border-accent: var(--amber-8);
   --border-accent-hover: var(--amber-9);
+  --border-accent-focus: var(--amber-10);
+  --border-input-inset: var(--sand-4);
   --border-key-white: var(--sand-11);
   --border-key-black: var(--sand-3);
   --ring-accent: 0 0 0 2px var(--background), 0 0 0 4px var(--amber-a8);

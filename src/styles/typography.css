@@ -111,6 +111,9 @@ p {
   text-align: justify;
 }
 
+.text-capitalize {
+  text-transform: capitalize;
+}
 .text-uppercase {
   text-transform: uppercase;
 }

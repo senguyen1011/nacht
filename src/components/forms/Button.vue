@@ -12,6 +12,7 @@
   const classes: ComputedRef<string[]> = computed(() => {
     const res: string[] = [];
     addToClasses(res, props.size);
+    addToClasses(res, props.type);
     addToClasses(res, props.color);
     return res;
   });
@@ -53,6 +54,39 @@
   }
   .btn:is(:hover, :active, :focus).accent {
     --inpt-text: var(--text-accent-hover);
+  }
+
+  .btn.accent.solid {
+    --inpt-text: var(--background);
+    --inpt-background: var(--background-accent);
+  }
+  .btn.accent.solid:is(:hover, :focus) {
+    --inpt-text: var(--background);
+    --inpt-background: var(--background-accent-hover);
+  }
+  .btn.accent.solid {
+    --inpt-background: var(--background-accent-focus);
+  }
+
+  .btn.accent.ghost {
+    --inpt-text: var(--text-accent);
+    --inpt-background: var(--background-ghost-accent);
+    --inpt-border: var(--border-accent);
+  }
+  .btn.accent.ghost:hover {
+    --inpt-text: var(--text-accent);
+    --inpt-background: var(--background-ghost-accent-hover);
+    --inpt-border: var(--border-accent-hover);
+  }
+  .btn.accent.ghost:focus {
+    --inpt-text: var(--text-accent);
+    --inpt-background: var(--background-ghost-accent);
+    --inpt-border: var(--border-accent-hover);
+  }
+  .btn.accent.ghost:active {
+    --inpt-text: var(--background);
+    --inpt-background: var(--background-accent);
+    --inpt-border: var(--border-accent-focus);
   }
 
   .btn[icon='true'] {

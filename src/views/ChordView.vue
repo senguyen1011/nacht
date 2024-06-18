@@ -1,18 +1,29 @@
 <script setup lang="ts">
   import { RouterView, RouterLink } from 'vue-router';
-  import { onMounted, ref, type Ref } from 'vue';
-  import { Scale, ScaleType } from 'tonal';
-  import { allNotes, formatNote } from '@/lib';
+  import { computed, onMounted, ref, type ComputedRef, type Ref } from 'vue';
+  import { Chord, ChordType } from 'tonal';
+  import { getChordNotes, playChord } from '@/lib/music';
+  import Search from './Search.vue';
 
   /** Refs */
-  const isSearching: Ref<boolean> = ref(true);
+  const isSearching: Ref<boolean> = ref(false);
+  const noteLetter: Ref<string> = ref('C');
+  const chordType: Ref<string> = ref('major');
+  const clef: Ref<'treble' | 'bass'> = ref('treble');
+  const inversion: Ref<number> = ref(0);
 
-  
-  onMounted(() => {
-    console.log(Scale.get('c chromatic'))
-  })
+  /** Computed */
+  const baseOctave: ComputedRef<2 | 3 | 4 | 5> = computed(() => {
+    if (clef.value === 'treble') {
+      return 4;
+    } else {
+      return 3;
+    }
+  });
+  const chordNotes: ComputedRef<string[]> = computed(() =>
+    getChordNotes(noteLetter.value, baseOctave.value, chordType.value, inversion.value)
+  );
 </script>
-
 <template>
   <main id="chords">
     <header>
@@ -32,57 +43,96 @@
     <div class="display">
       <template v-if="!isSearching">
         <hgroup class="titles">
-          <Heading>C maj</Heading>
-          <Text color="muted">Major</Text>
+          <Heading
+            ><Note>{{ noteLetter }}</Note> {{ ChordType.get(chordType).aliases[0] }}</Heading
+          >
+          <Text
+            color="muted"
+            transform="capitalize"
+            >{{ chordType }}</Text
+          >
         </hgroup>
-        <Score :notes="['C4', 'E4', 'G4']" />
+        <Score
+          :notes="chordNotes"
+          :clef="clef"
+          :key="chordNotes"
+        />
       </template>
-      <Piano />
+      <Piano
+        :octave="baseOctave"
+        :active="chordNotes"
+        :key="chordNotes"
+      />
     </div>
     <div
       v-if="!isSearching"
       class="card"
     >
       <div class="options card-section">
+        <div class="flex-row">
+          <Button
+            color="accent"
+            type="ghost"
+            @click="playChord(chordNotes, false)"
+            ><Icon name="recording-1" />Play Chord</Button
+          >
+          <Button
+            color="accent"
+            type="ghost"
+            @click="playChord(chordNotes, true)"
+            ><Icon name="recording-2" />Play Arpeggio</Button
+          >
+        </div>
         <SegmentedControlRoot
           name="clef"
-          @input="(val?: string) => console.log('input', val)"
+          :value="clef"
+          @input="(val: string) => clef = (val as 'treble' | 'bass')"
           ><SegmentedControlItem value="treble">Treble</SegmentedControlItem>
           <SegmentedControlItem value="bass">Bass</SegmentedControlItem>
         </SegmentedControlRoot>
         <SegmentedControlRoot
           name="inversion"
-          @input="(val?: string) => console.log('input', val)"
-          ><SegmentedControlItem value="root">Root</SegmentedControlItem>
-          <SegmentedControlItem value="1">1</SegmentedControlItem>
-          <SegmentedControlItem value="2">2</SegmentedControlItem>
+          @input="(val: string) => inversion = Number(val)"
+        >
+          <SegmentedControlItem
+            v-for="(note, ind) in chordNotes"
+            :value="ind"
+            >{{ ind === 0 ? 'Root' : ind }}</SegmentedControlItem
+          >
         </SegmentedControlRoot>
       </div>
       <div class="info card-section">
         <DataListRoot>
           <DataListItem>
             <DataListLabel>Degrees</DataListLabel>
-            <DataListValue>1, 3, 5</DataListValue>
+            <DataListValue>{{
+              Chord.get(`${noteLetter}${chordType}`).intervals.join(', ')
+            }}</DataListValue>
           </DataListItem>
           <DataListItem>
             <DataListLabel>Notes</DataListLabel>
-            <DataListValue>C, E, G</DataListValue>
+            <DataListValue>
+              <template v-for="(note, ind) in chordNotes">
+                <Note>{{ note }}</Note
+                >{{ ind === chordNotes.length - 1 ? '' : ',&nbsp;' }}
+              </template>
+            </DataListValue>
           </DataListItem>
         </DataListRoot>
       </div>
     </div>
-    <div v-else class="search">
-      <ScrollPickerRoot>
-        <ScrollPickerItem
-          v-for="note in allNotes"
-        >
-        <Heading size="5xl">
-
-          {{ formatNote(note) }}
-        </Heading>
-        </ScrollPickerItem>
-      </ScrollPickerRoot>
-    </div>
+    <Search
+      v-else
+      :noteLetter="noteLetter"
+      :chordType="chordType"
+      @input="
+        val => {
+          noteLetter = val.noteLetter;
+          chordType = val.chordType;
+        }
+      "
+      @submit="isSearching = false"
+    />
   </main>
 </template>
 
@@ -109,6 +159,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
     gap: var(--space-lg);
   }
 
@@ -128,8 +179,8 @@
     padding: var(--space-lg);
     gap: var(--space-lg);
     background-color: var(--background-card);
-    border-top-left-radius: var(--radius-xl);
-    border-top-right-radius: var(--radius-xl);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
   }
 
   .card-section {
@@ -139,6 +190,18 @@
   }
 
   .search {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
+    gap: var(--space-md);
+  }
+
+  .search .options-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>

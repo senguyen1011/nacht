@@ -5,6 +5,8 @@
 
 <template>
   <RouterView/>
+
+  <div class="footer-offset"></div>
   <footer>
     <nav>
       <RouterLink
@@ -21,12 +23,18 @@
 </template>
 
 <style>
+  :root {
+    --footer-height: calc(var(--size-16) + (var(--space-lg) * 2));
+  }
   footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: var(--space-lg);
+    height: var(--footer-height);
+    /* width: var(--screen-xs); */
+    margin: 0 auto;
+    padding: var(--space-lg) 0;
   }
 
   nav {
@@ -37,7 +45,8 @@
     font-size: var(--font-xs);
     text-align: center;
     background-color: var(--background-nav);
-    border-radius: var(--radius-3xl);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
   }
@@ -55,5 +64,11 @@
   }
   nav .nav-link:is(:active, :focus) {
     color: var(--text-accent-hover);
+  }
+
+  .footer-offset {
+    height: var(--footer-height);
+    min-height: var(--footer-height);
+    width: 100%;
   }
 </style>

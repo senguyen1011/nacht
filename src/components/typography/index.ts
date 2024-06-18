@@ -30,7 +30,7 @@ interface TextProps {
   weight?: fontWeight;
   color?: fontColor;
   align?: textAlign;
-  transform?: 'uppercase' | 'lowercase';
+  transform?: 'capitalize' | 'uppercase' | 'lowercase';
 }
 
 /* Functions */
